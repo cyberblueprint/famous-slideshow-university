@@ -4,6 +4,10 @@ define(function(require, exports, module) {
     var Transform = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
 
+    var ImageSurface = require('famous/surfaces/ImageSurface');
+    var SlideData = require('data/SlideData');
+
+
     // SlideView constructor function
     // runs once for each new instance
     function SlideView() {
@@ -16,6 +20,8 @@ define(function(require, exports, module) {
         this.mainNode = this.add(this.rootModifier);
 
         _createBackground.call(this);
+        _createFilm.call(this);
+        _createPhoto.call(this);
     }
 
     // the _ before the function name indicates it's a private function
@@ -30,11 +36,54 @@ define(function(require, exports, module) {
         this.mainNode.add(background);
     }
 
+     function _createFilm() {
+        this.options.filmSize = this.options.size[0] - 2 * this.options.filmBorder;
+
+        var film = new Surface({
+            size: [this.options.filmSize, this.options.filmSize],
+            properties: {
+                backgroundColor: '#222',
+                zIndex: 1
+            }
+        });
+
+        var filmModifier = new StateModifier({
+            origin: [0.5, 0],
+            align: [0.5, 0],
+            transform: Transform.translate(0, this.options.filmBorder, 1)
+        });
+
+        this.mainNode.add(filmModifier).add(film);
+    }
+
+    function _createPhoto() {
+        var photoSize = this.options.filmSize - 2 * this.options.photoBorder;
+
+        var photo = new ImageSurface({
+            size: [photoSize, photoSize],
+            content: this.options.photoUrl,
+            properties: {
+                zIndex: 2
+            }
+        });
+
+        this.photoModifier = new StateModifier({
+            origin: [0.5, 0],
+            align: [0.5, 0],
+            transform: Transform.translate(0, this.options.filmBorder + this.options.photoBorder, 2)
+        });
+
+        this.mainNode.add(this.photoModifier).add(photo);
+    }
+
     SlideView.prototype = Object.create(View.prototype);
     SlideView.prototype.constructor = SlideView;
 
     SlideView.DEFAULT_OPTIONS = {
-        size: [400, 450]
+        size: [400, 450],
+        filmBorder: 15,
+        photoBorder: 3,
+        photoUrl: SlideData.defaultImage
     };
 
     module.exports = SlideView;
