@@ -10,13 +10,17 @@ define(function(require, exports, module) {
         View.apply(this, arguments);
 
         this.rootModifier = new StateModifier({
-            size: [400, 450]
+            size: this.options.size
         });
 
         this.mainNode = this.add(this.rootModifier);
 
+        _createBackground.call(this);
+    }
+
+    // the _ before the function name indicates it's a private function
+    function _createBackground() {
         var background = new Surface({
-               // undefined size will inherit size from parent modifier
             properties: {
                 backgroundColor: '#FFFFF5',
                 boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.5)'
@@ -29,7 +33,9 @@ define(function(require, exports, module) {
     SlideView.prototype = Object.create(View.prototype);
     SlideView.prototype.constructor = SlideView;
 
-    SlideView.DEFAULT_OPTIONS = {};
+    SlideView.DEFAULT_OPTIONS = {
+        size: [400, 450]
+    };
 
     module.exports = SlideView;
 });
