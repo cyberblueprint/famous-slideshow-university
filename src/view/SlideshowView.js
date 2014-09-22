@@ -39,8 +39,9 @@ define(function(require, exports, module) {
     function _createSlides() {
         this.slides = [];
         this.currentIndex = 0;
+        console.log(this.options.data);
 
-        for (var i = 0; i < this.options.data.length; i++) {
+        for (var i = 0; i < 3; i++) {
             var slide = new SlideView({
                 size: this.options.size,
                 photoUrl: this.options.data[i]
@@ -49,6 +50,7 @@ define(function(require, exports, module) {
             this.slides.push(slide);
             slide.on('click', this.showNextSlide.bind(this));
         }
+
 
          this.showCurrentSlide();
     }

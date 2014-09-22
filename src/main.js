@@ -1,18 +1,13 @@
 define(function(require, exports, module) {
 	var Engine  = require('famous/core/Engine');
 	var AppView = require('view/AppView');
-	var Utility = require('famous/utilities/Utility');
-	var SlideData = require('data/SlideData');
+	var data = require('data/DataValues');
 
 	var mainContext = Engine.createContext();
-	 Utility.loadURL(SlideData.getUrl(), initApp);
 
 
-	function initApp(data) {
-        data = SlideData.parse(data);
+    var appView = new AppView({ data: data});
 
-        var appView = new AppView({ data : data });
-
-        mainContext.add(appView);
-    }
+    mainContext.add(appView);
+    
 });
