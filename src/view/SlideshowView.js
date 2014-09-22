@@ -12,6 +12,7 @@ define(function(require, exports, module) {
 
     SlideshowView.DEFAULT_OPTIONS = {
         size: [450, 500],
+        data: undefined,
         lightboxOpts: {}
     };
 

@@ -10,15 +10,17 @@ define(function(require, exports, module) {
     AppView.prototype.constructor = AppView;
 
     AppView.DEFAULT_OPTIONS = {
-
+        data: undefined
     };
 
     function AppView(options) {
         View.apply(this, arguments);
 
-       var slideshow = new SlideshowView();
+        var slideshow = new SlideshowView({
+            data: this.options.data
+        });
 
-       this.add(slideshow);
+        this.add(slideshow);
     }
 
     module.exports = AppView;
