@@ -23,12 +23,9 @@ define(function(require, exports, module) {
     function AppView(options) {
         View.apply(this, arguments);
 
-        var slideshow = new SlideshowView({
-            data: this.options.data
-        });
-
-        this.add(slideshow);
+        
         _createCamera.call(this);
+        _createSlideshow.call(this);
     }
 
     function _createCamera() {
@@ -47,6 +44,21 @@ define(function(require, exports, module) {
         });
 
         this.add(cameraModifier).add(camera);
+    }
+
+    function _createSlideshow() {
+        var slideshowView = new SlideshowView({
+            size: [this.options.slideWidth, this.options.slideHeight],
+            data: this.options.data
+        });
+
+        var slideshowModifier = new StateModifier({
+            origin: [0.5, 0],
+            align: [0.5, 0],
+            transform: Transform.translate(0, this.options.slidePosition, 0)
+        });
+
+        this.add(slideshowModifier).add(slideshowView);
     }
 
     module.exports = AppView;
