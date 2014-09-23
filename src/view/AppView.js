@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var SlideshowView = require('view/SlideshowView');
 
     var ImageSurface = require('famous/surfaces/ImageSurface');
+    var ContainerSurface = require('famous/surfaces/ContainerSurface');
 
     AppView.prototype = Object.create(View.prototype);
     AppView.prototype.constructor = AppView;
@@ -58,7 +59,14 @@ define(function(require, exports, module) {
             transform: Transform.translate(0, this.options.slidePosition, 0)
         });
 
+        var slideshowContainer = new ContainerSurface({
+            properties: {
+                overflow: 'hidden'
+            }
+        });
+
         this.add(slideshowModifier).add(slideshowView);
+        slideshowContainer.add(slideshowView);
     }
 
     module.exports = AppView;
