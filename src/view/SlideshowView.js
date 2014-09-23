@@ -7,13 +7,20 @@ define(function(require, exports, module) {
     var SlideView = require('view/SlideView');
     var Lightbox = require('famous/views/Lightbox');
 
+    var Easing = require('famous/transitions/Easing');
+
     SlideshowView.prototype = Object.create(View.prototype);
     SlideshowView.prototype.constructor = SlideshowView;
 
     SlideshowView.DEFAULT_OPTIONS = {
         size: [450, 500],
         data: undefined,
-        lightboxOpts: {}
+        lightboxOpts: {
+            inTransform: Transform.translate(300, 0, 0),
+            outTransform: Transform.translate(-500, 0, 0),
+            inTransition: { duration: 500, curve: Easing.outBack },
+            outTransition: { duration: 350, curve: Easing.inQuad }
+        }
     };
 
     function SlideshowView(options) {
